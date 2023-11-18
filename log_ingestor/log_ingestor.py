@@ -1,16 +1,13 @@
 from aiohttp import web
-import asyncio
 import aiohttp
-import json
-from datetime import datetime
 
-elasticsearch_url = "http://192.168.49.2:30991"
-index_name = "myapp-logs"
+elasticsearch_service_name = "elasticsearch-service"  # Update with your service name
+index_name = "logs"
 
 async def handle_log(request):
     log_entry = await request.text()
     headers = {'Content-Type': 'application/json'}
-    url = f"{elasticsearch_url}/{index_name}/_doc"
+    url = f"http://{elasticsearch_service_name}:9200/{index_name}/_doc"
 
     try:
         async with aiohttp.ClientSession() as session:

@@ -1,4 +1,4 @@
-apiVersion: autoscaling/v2beta2
+apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: aiohttp-log-ingestor-hpa
@@ -8,11 +8,5 @@ spec:
     kind: Deployment
     name: aiohttp-log-ingestor
   minReplicas: 2
-  maxReplicas: 5
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 50
+  maxReplicas: 7
+  targetCPUUtilizationPercentage: 70
