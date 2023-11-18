@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aiohttp-log-ingestor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aiohttp-log-ingestor
+  template:
+    metadata:
+      labels:
+        app: aiohttp-log-ingestor
+    spec:
+      containers:
+        - name: aiohttp-log-ingestor
+          image: sujayjreddy/log_ingestor:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "100m"
