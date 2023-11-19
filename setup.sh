@@ -7,6 +7,8 @@ kubectl apply -f elasticsearch-pvc.yaml
 kubectl apply -f elasticsearch.yaml
 kubectl apply -f elasticsearch-service.yaml
 
+echo "Creating pod...."
+
 # wait for Elasticsearch pods to be in the "Running" state
 kubectl wait --for=condition=Ready pod -l app=elasticsearch --timeout=300s
 
@@ -16,6 +18,8 @@ echo "Setting up Ingestor"
 kubectl apply -f aiohttp-log-ingestor-deployment.yaml
 kubectl apply -f aiohttp-log-ingestor-service.yaml
 kubectl apply -f ingestor-hpa.yaml
+
+echo "Creating pod...."
 
 # wait for Ingestor pods to be in the "Running" state
 kubectl wait --for=condition=Ready pod -l app=aiohttp-log-ingestor --timeout=300s

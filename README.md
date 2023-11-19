@@ -19,6 +19,14 @@ The log ingestor is made to receive and handle log entries before sending them t
    - The `log_ingestor.py` script defines the behavior of the log ingestor, exposing an endpoint (`/ingest-log`) to receive log entries via POST requests.
    - The log entries are then forwarded to Elasticsearch for indexing.
 
+### Implementation:
+
+- For the log management infrastructure, Elasticsearch was chosen as the central data store for log entries due to its robust search and analytics capabilities. The deployment of Elasticsearch was facilitated by utilizing the official Docker image from Elastic. A Kubernetes Deployment and Service were configured using the elasticsearch.yaml file, ensuring high availability and scalability. Persistent storage for Elasticsearch was provisioned using the elasticsearch-pvc.yaml Persistent Volume Claim.
+
+- Simultaneously, the log ingestor, responsible for receiving and forwarding log entries to Elasticsearch, was implemented using aiohttp, a lightweight asynchronous web framework for Python. The ingestor's custom Docker image was built and stored in a private container registry. The deployment of the log ingestor was orchestrated using Kubernetes, with configurations specified in aiohttp-log-ingestor-deployment.yaml and aiohttp-log-ingestor-service.yaml. The deployment was designed to scale horizontally by leveraging the Horizontal Pod Autoscaler defined in ingestor-hpa.yaml, ensuring optimal resource utilization based on CPU metrics.
+
+- The log_ingestor.py script within the log ingestor image defined the behavior of log ingestion, utilizing aiohttp to handle incoming log entries through a designated endpoint (/ingest-log). Upon receiving a log entry, the script constructed Elasticsearch URLs and forwarded the data to the Elasticsearch service for efficient indexing. The implementation was aimed at achieving a balance between performance, scalability, and ease of deployment in a Kubernetes environment.
+
 ### Communication Flow:
 
 1. **Log Ingestion:**
