@@ -3,6 +3,7 @@ import json
 import shlex
 
 def run_query():
+    print_help()
     while True:
         print("\n")
         user_query = input("$ query ")
