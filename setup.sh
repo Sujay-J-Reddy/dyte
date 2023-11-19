@@ -24,4 +24,4 @@ kubectl apply -f aiohttp-log-ingestor-service.yaml
 kubectl apply -f ingestor-hpa.yaml
 
 # Port forwarding for aiohttp-log-ingestor to localhost:3000 
-kubectl port-forward service/aiohttp-log-ingestor-service 3000:3000 &
+kubectl port-forward service/aiohttp-log-ingestor 3000:3000 &
